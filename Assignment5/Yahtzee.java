@@ -86,7 +86,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 					ones += 1;
 				}
 			}
-			sumScores[1] = ones;
+			sumScores[playerCounter][1] += ones;
 			return ones;
 		}
 		
@@ -97,7 +97,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 					twos += 2;
 				}
 			}
-			sumScores[2] = twos;
+			sumScores[playerCounter][2] += twos;
 			return twos;
 		}
 		
@@ -108,7 +108,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 					threes += 3;
 				}
 			}
-			sumScores[3] = threes;
+			sumScores[playerCounter][3] += threes;
 			return threes;
 		}
 		
@@ -119,7 +119,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 					fours += 4;
 				}
 			}
-			sumScores[4] = fours;
+			sumScores[playerCounter][4] += fours;
 			return fours;
 		}
 		
@@ -130,7 +130,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 					fives += 5;
 				}
 			}
-			sumScores[5] = fives;
+			sumScores[playerCounter][5] += fives;
 			return fives;
 		}
 		
@@ -141,7 +141,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 					sixes += 6;
 				}
 			}
-			sumScores[6] = sixes;
+			sumScores[playerCounter][6] += sixes;
 			return sixes;
 		}
 		
@@ -161,27 +161,27 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 				if (updatedDiceArray[i] == 6) { six += 6; }
 			}
 			if (one == 3) { 
-				sumScores[7] = 3;
+				sumScores[playerCounter][7] += 3;
 				return 3; 
 			}
 			if (two == 6) { 
-				sumScores[7] = 6;
+				sumScores[playerCounter][7] += 6;
 				return 6; 
 			}
 			if (three == 9) { 
-				sumScores[7] = 9;
+				sumScores[playerCounter][7] += 9;
 				return 9; 
 			}
 			if (four == 12) { 
-				sumScores[7] = 12;
+				sumScores[playerCounter][7] += 12;
 				return 12; 
 			}
 			if (five == 15) { 
-				sumScores[7] = 15;
+				sumScores[playerCounter][7] += 15;
 				return 15; 
 			}
 			if (six == 18) { 
-				sumScores[7] = 18;
+				sumScores[playerCounter][7] += 18;
 				return 18; 
 			}
 		}
@@ -202,27 +202,27 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 				if (updatedDiceArray[i] == 6) { six += 6; }
 			}
 			if (one == 4) { 
-				sumScores[8] = 4; 
+				sumScores[playerCounter][8] += 4; 
 				return 4; 
 			}
 			if (two == 8) { 
-				sumScores[8] = 8; 
+				sumScores[playerCounter][8] += 8; 
 				return 8; 
 			}
 			if (three == 12) { 
-				sumScores[8] = 12; 
+				sumScores[playerCounter][8] += 12; 
 				return 12; 
 			}
 			if (four == 16) { 
-				sumScores[8] = 16;
+				sumScores[playerCounter][8] += 16;
 				return 16; 
 			}
 			if (five == 20) { 
-				sumScores[8] = 20;
+				sumScores[playerCounter][8] += 20;
 				return 20; 
 			}
 			if (six == 24) { 
-				sumScores[8] = 24;
+				sumScores[playerCounter][8] += 24;
 				return 24; 
 			}
 		}
@@ -244,7 +244,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 			}
 			
 			if (hasTwo && hasThree) {
-				sumScores[9] = 25;
+				sumScores[playerCounter][9] += 25;
 				return 25;
 			} else {
 				return 0;
@@ -271,7 +271,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 			}
 		
 			if (hasStraight) {
-				sumScores[10] = 30;
+				sumScores[playerCounter][10] += 30;
 				return 30;
 			} else {
 				return 0;
@@ -294,7 +294,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 			} 
 		
 			if (hasStraight) {
-				sumScores[11] = 40;
+				sumScores[playerCounter][11] += 40;
 				return 40;
 			} else {
 				return 0;
@@ -307,7 +307,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 					if (updatedDiceArray[2] == updatedDiceArray[3]) {
 						if (updatedDiceArray[3] == updatedDiceArray[4]) {
 							if (updatedDiceArray[4] == updatedDiceArray[5]) {
-								sumScores[12] = 50;
+								sumScores[playerCounter][12] += 50;
 								return 50;
 								}
 							}
@@ -322,7 +322,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 			int sum = 0;
 			for (int i = 0; i < updatedDiceArray.length; i++) {
 				sum += updatedDiceArray[i];
-				sumScores[13] = sum;
+				sumScores[playerCounter][13] += sum;
 			}
 			
 			return sum;
@@ -334,15 +334,15 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 	
 	private void updateScore() {
 		for (int i = 1; i <= 6; i++) {
-			upperSum += sumScores[i];
+			upperSum += sumScores[playerCounter][i];
 		}
 		
 		for (int j = 7; j <= 13; j++) {
-			lowerSum += sumScores[j];
+			lowerSum += sumScores[playerCounter][j];
 		}
 		
 		for (int x = 0; x <= 13; x++) {
-			totalSum += sumScores[x];
+			totalSum += sumScores[playerCounter][x];
 		}
 		
 		if (upperSum >= 63) {
@@ -359,7 +359,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 	private int totalSum = 0;
 	private int[] diceArray = new int[N_DICE];
 	private int[] updatedDiceArray = new int[N_DICE];
-	private int[] sumScores = new int[N_SCORING_CATEGORIES + 1];
+	private int[][] sumScores = new int[nPlayers + 1][N_SCORING_CATEGORIES + 1];
 	private int playerCounter = 1;
 	private int category;
 	private String[] playerNames;
