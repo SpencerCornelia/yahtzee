@@ -32,9 +32,6 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 			playerTurns();
 			int score = createScore(category);
 			updateScore();
-			display.updateScorecard(UPPER_SCORE, playerCounter, upperSum);
-			display.updateScorecard(LOWER_SCORE, playerCounter, lowerSum);
-			display.updateScorecard(TOTAL, playerCounter, totalSum);
 			display.updateScorecard(category, playerCounter, score);
 			playerCounter = determinePlayerCounter(playerCounter);
 			numOfTurns --;
@@ -333,8 +330,18 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 	}
 	
 	private void updateScore() {
+		int upperSum = 0;
+		int lowerSum = 0;
+		int totalSum = 0;
+		
 		for (int i = 1; i <= 6; i++) {
 			upperSum += sumScores[playerCounter][i];
+		}
+		
+		if (upperSum >= 63) {
+			totalSum += 35;
+			int upperBonus = 35;
+			display.updateScorecard(UPPER_BONUS, playerCounter, upperBonus);
 		}
 		
 		for (int j = 7; j <= 13; j++) {
@@ -345,18 +352,13 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 			totalSum += sumScores[playerCounter][x];
 		}
 		
-		if (upperSum >= 63) {
-			upperSum += 35;
-			int upperBonus = 35;
-			display.updateScorecard(UPPER_BONUS, playerCounter, upperBonus);
-		}
+		display.updateScorecard(UPPER_SCORE, playerCounter, upperSum);
+		display.updateScorecard(LOWER_SCORE, playerCounter, lowerSum);
+		display.updateScorecard(TOTAL, playerCounter, totalSum);
 	}
 		
 /* Private instance variables */
 	private int nPlayers;
-	private int upperSum = 0;
-	private int lowerSum = 0;
-	private int totalSum = 0;
 	private int[] diceArray = new int[N_DICE];
 	private int[] updatedDiceArray = new int[N_DICE];
 	private int[][] sumScores = new int[nPlayers + 1][N_SCORING_CATEGORIES + 1];
