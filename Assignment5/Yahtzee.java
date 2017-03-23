@@ -36,6 +36,9 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 			playerCounter = determinePlayerCounter(playerCounter);
 			numOfTurns --;
 		}
+		
+		sumTotalScores();
+		String winner = checkForWinner();
 	}
 	
 	private void playerTurns() {
@@ -141,7 +144,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 			return sixes;
 		}
 		
-		if (score == 7) {
+		if (score == 9) {
 			int one = 0;
 			int two = 0;
 			int three = 0;
@@ -182,7 +185,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 			}
 		}
 		
-		if (score == 8) {
+		if (score == 10) {
 			int one = 0;
 			int two = 0;
 			int three = 0;
@@ -223,7 +226,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 			}
 		}
 		
-		if (score == 9) {
+		if (score == 11) {
 			int[] counts = new int[6];
 			boolean hasTwo = false;
 			boolean hasThree = false;
@@ -247,7 +250,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 			}
 		}
 		
-		if (score == 10) {
+		if (score == 12) {
 			boolean hasStraight = false;
 			int[] counts = new int[7];
 			for (int i = 0; i < updatedDiceArray.length; i++) {
@@ -274,7 +277,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 			}
 		}
 		
-		if (score == 11) {
+		if (score == 13) {
 			boolean hasStraight = false;
 			int[] counts = new int[7];
 			for (int i = 0; i < updatedDiceArray.length; i++) {
@@ -297,7 +300,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 			}
 		}
 		
-		if (score == 12) {
+		if (score == 14) {
 			if (updatedDiceArray[0] == updatedDiceArray[1]) {
 				if (updatedDiceArray[1] == updatedDiceArray[2]) {
 					if (updatedDiceArray[2] == updatedDiceArray[3]) {
@@ -312,7 +315,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 				}
 		} 
 		
-		if (score == 13) {
+		if (score == 15) {
 			int sum = 0;
 			for (int i = 0; i < updatedDiceArray.length; i++) {
 				sum += updatedDiceArray[i];
@@ -332,6 +335,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 		
 		for (int i = 0; i <= 6; i++) {
 			upperSum += sumScores[playerCounter][i];
+			System.out.println("upperSum = " + upperSum);
 		}
 		
 		if (upperSum >= 63) {
@@ -353,11 +357,36 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 		display.updateScorecard(TOTAL, playerCounter, totalSum);
 	}
 		
+	private void sumTotalScores() {
+		int totalSum = 0;
+		playerCounter = 1;
+		for (int i = 0; i < nPlayers; i++) {
+			for (int j = 0; j < N_SCORING_CATEGORIES; j++) {
+				totalSum += sumScores[playerCounter][j];
+			}
+			playerCounter ++;
+			sumScores[playerCounter][18] = totalSum;
+		}
+	}
+	
+	private String checkForWinner() {
+		int totalSum = 0;
+		String winner = "";
+		for (int i = 0; i < playerNames.length; i++) {
+			if (totalSum < sumScores[i][18]) {
+				totalSum = sumScores[i][18];
+				winner = playerNames[i];
+			}
+		}
+		
+		return winner;
+	}
+	
 /* Private instance variables */
 	private int nPlayers;
 	private int[] diceArray = new int[N_DICE];
 	private int[] updatedDiceArray = new int[N_DICE];
-	private int[][] sumScores = new int[5][18];
+	private int[][] sumScores = new int[5][19];
 	private int playerCounter = 1;
 	private int category;
 	private String[] playerNames;
