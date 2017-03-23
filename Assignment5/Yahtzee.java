@@ -27,7 +27,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 	}
 
 	private void playGame() {
-		int numOfTurns = N_SCORING_CATEGORIES;
+		int numOfTurns = N_SCORING_CATEGORIES * nPlayers;
 		while (numOfTurns > 0) {
 			playerTurns();
 			int score = createScore(category);
@@ -39,6 +39,7 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 		
 		sumTotalScores();
 		String winner = checkForWinner();
+		System.out.println(winner);
 	}
 	
 	private void playerTurns() {
@@ -335,7 +336,6 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 		
 		for (int i = 0; i <= 6; i++) {
 			upperSum += sumScores[playerCounter][i];
-			System.out.println("upperSum = " + upperSum);
 		}
 		
 		if (upperSum >= 63) {
@@ -364,15 +364,15 @@ public class Yahtzee extends GraphicsProgram implements YahtzeeConstants {
 			for (int j = 0; j < N_SCORING_CATEGORIES; j++) {
 				totalSum += sumScores[playerCounter][j];
 			}
-			playerCounter ++;
 			sumScores[playerCounter][18] = totalSum;
+			playerCounter ++;
 		}
 	}
 	
 	private String checkForWinner() {
 		int totalSum = 0;
 		String winner = "";
-		for (int i = 0; i < playerNames.length; i++) {
+		for (int i = 1; i < playerNames.length + 1; i++) {
 			if (totalSum < sumScores[i][18]) {
 				totalSum = sumScores[i][18];
 				winner = playerNames[i];
